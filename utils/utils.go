@@ -2,7 +2,10 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"os"
+	"strconv"
+	"unicode"
 )
 
 var (
@@ -48,4 +51,21 @@ func ReverseString(s string) string {
 		result = string(c) + result
 	}
 	return result
+}
+
+func ToInt(phrase string, includeString bool) (int, error) {
+	if len(phrase) == 1 && unicode.IsDigit(rune(phrase[0])) {
+		return strconv.Atoi(phrase)
+	}
+
+	if includeString {
+		digit, ok := Digits[phrase]
+		if !ok {
+			return -1, fmt.Errorf("unable to find digit for phrase: %s", phrase)
+		}
+
+		return digit, nil
+	}
+
+	return -1, fmt.Errorf("input string is neither a digit nor the name of a digit: %s", phrase)
 }

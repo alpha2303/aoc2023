@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"regexp"
-	"strconv"
 	"unicode"
 
 	"github.com/alpha2303/aoc2023/utils"
@@ -19,19 +18,6 @@ var (
 	ReverseNumbers = regexp.MustCompile(utils.ReverseString(utils.Pattern))
 )
 
-func toInt(phrase string) (int, error) {
-	if len(phrase) == 1 && unicode.IsDigit(rune(phrase[0])) {
-		return strconv.Atoi(phrase)
-	}
-
-	digit, ok := utils.Digits[phrase]
-	if !ok {
-		return -1, fmt.Errorf("unable to find digit for phrase: %s", phrase)
-	}
-
-	return digit, nil
-}
-
 func extractNumber(phrase string) int {
 	var n int = len(phrase)
 	var num int = 0
@@ -39,7 +25,7 @@ func extractNumber(phrase string) int {
 
 	for i < n {
 		if unicode.IsDigit(rune(phrase[i])) {
-			digit, err := strconv.Atoi(string(phrase[i]))
+			digit, err := utils.ToInt(string(phrase[i]), false)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -53,7 +39,7 @@ func extractNumber(phrase string) int {
 	var j int = n - 1
 	for j >= i {
 		if unicode.IsDigit(rune(phrase[j])) {
-			digit, err := strconv.Atoi(string(phrase[j]))
+			digit, err := utils.ToInt(string(phrase[j]), false)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -68,12 +54,12 @@ func extractNumber(phrase string) int {
 }
 
 func extractNumber2(phrase string) int {
-	firstDigit, err := toInt(Numbers.FindString(phrase))
+	firstDigit, err := utils.ToInt(Numbers.FindString(phrase), true)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	lastDigit, err := toInt(utils.ReverseString(ReverseNumbers.FindString(utils.ReverseString(phrase))))
+	lastDigit, err := utils.ToInt(utils.ReverseString(ReverseNumbers.FindString(utils.ReverseString(phrase))), true)
 	if err != nil {
 		log.Fatal(err)
 	}

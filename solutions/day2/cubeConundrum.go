@@ -30,8 +30,6 @@ func getMaxColorCount(phrase string) ([3]int, error) {
 
 	for i, instance := range gameInstances {
 		countMap := strings.Split(instance, " ")
-		// fmt.Println(countMap)
-		// fmt.Println(countMap[1])
 		count, err := strconv.Atoi(strings.Trim(countMap[1], " "))
 		if err != nil {
 			return maxGameColors, fmt.Errorf("integer conversion error at instance %d", (i + 1))
