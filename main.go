@@ -8,6 +8,7 @@ import (
 
 	"github.com/alpha2303/aoc2023/solutions/day1"
 	"github.com/alpha2303/aoc2023/solutions/day2"
+	"github.com/alpha2303/aoc2023/solutions/day3"
 )
 
 func main() {
@@ -26,6 +27,8 @@ func main() {
 		day1.Trebuchet(partNo)
 	case "2":
 		day2.CubeConundrum(partNo)
+	case "3":
+		day3.GearRatios(partNo)
 	default:
 		log.Fatal(fmt.Errorf("invalid day number provided"))
 	}
